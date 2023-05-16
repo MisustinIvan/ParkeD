@@ -1,39 +1,44 @@
 #include "Arduino.h"
 #include "pins.h"
 #include "libs.h"
-
-#pragma region definitions
-Ultrasonic ultrasonic1(25, 33);
-Ultrasonic ultrasonic2(32, 35);
-Ultrasonic ultrasonic3(18, 19);
-
-#pragma endregion
-
-#pragma region functions
-void sendData(int id, bool value){
-  Serial.println("BtnPressed");
+byte triggerPin = 21;
+byte echoPin = 12;
+int actualState1 = 0;//0 free, 1 full, 2 reserver
+float distance1;
+boolean reserved1 = false;
+void diodes(){
+  Serial.println(String(distance1));
+  if(distance1 >0 && distance1 < 10){
+    actualState1 = 0;
+    digitalWrite(FreePinLed, HIGH);
+    digitalWrite(FullPinLed, LOW);
+    digitalWrite(ReservedPinLed, LOW);
+  }else if(distance1 > 0){
+    actualState1 = 1;
+    digitalWrite(FreePinLed, LOW);
+    digitalWrite(FullPinLed, HIGH);
+    digitalWrite(ReservedPinLed, LOW);
+  }
+  if(reserved1){
+    actualState1 = 2;
+    digitalWrite(FreePinLed, LOW);
+    digitalWrite(FullPinLed, LOW);
+    digitalWrite(ReservedPinLed, HIGH);
+  }
+  
+}
+void setup () {
+  Serial.begin(9600);
+  HCSR04.begin(triggerPin, echoPin);
+  pinMode(FreePinLed, OUTPUT);
+  pinMode(FullPinLed, OUTPUT);
+  pinMode(ReservedPinLed, OUTPUT);
 }
 
-
-#pragma endregion
-
-
-void setup(){
-  pinMode(btnPin,INPUT_PULLUP);
-  Serial.begin(115200);
-  
-  
-}
-
-void loop(){
-  long microsec = ultrasonic1.timing();
-  long microsec = ultrasonic2.timing();
-  long microsec = ultrasonic3.timing();
-  float dist1 = float(ultrasonic1.read());
-  float dist2 = float(ultrasonic2.read());
-  float dist3 = float(ultrasonic3.read());
-  //Serial.println("Dist1: " + String(dist1));
-  Serial.println("Dist2: " + String(dist2));
-  Serial.println("Dist3: " + String(dist3));
+void loop () {
+  float temperature = 15;
+  double* distances = HCSR04.measureDistanceCm(temperature);
+  distance1 = float(distances[0]);
+  diodes();
   delay(1000);
 }
