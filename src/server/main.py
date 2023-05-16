@@ -78,16 +78,26 @@ from pprint import pprint
 #resp = requests.get(url, data=data)
 #pprint(resp.text)
 
-url = "http://localhost:6969/add_shared_ride"
+#url = "http://localhost:6969/add_shared_ride"
+#
+#data = {
+#    "driver_id" : 1,
+#    "from_where_x" : 1234,
+#    "from_where_y" : 4567,
+#    "to_where_x" : 4321,
+#    "to_where_y" : 8765,
+#    "when" : 420,
+#    }
+#
+#resp = requests.get(url, data=data)
+#pprint(resp.text)
+
+
+url = "http://localhost:6969/end_shared_ride"
 
 data = {
-    "driver_id" : 1,
-    "from_where_x" : 1234,
-    "from_where_y" : 4567,
-    "to_where_x" : 4321,
-    "to_where_y" : 8765,
-    "when" : 420,
-    }
+        "ride_id" : 1,
+        }
 
 resp = requests.get(url, data=data)
 pprint(resp.text)
