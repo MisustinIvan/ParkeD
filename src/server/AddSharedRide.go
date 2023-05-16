@@ -30,18 +30,16 @@ func AddSharedRide(w http.ResponseWriter, r * http.Request) {
 		log.Fatal(err)
 	}
 
-    driver_id := values.Get("id")
+    driver_id := values.Get("driver_id")
     from_where_x := values.Get("from_where_x")
     from_where_y := values.Get("from_where_y")
     to_where_x := values.Get("to_where_x")
     to_where_y := values.Get("to_where_y")
     when := values.Get("when")
 
-    command := fmt.Sprintf(
-`INSERT INTO rides (id, from_where_x, from_where_y, to_where_x, to_where_y, when)
-VALUES = (%s, %s, %s, %s, %s, %s)`,
-driver_id, from_where_x, from_where_y, to_where_x, to_where_y, when)
-
+command := fmt.Sprintf(`INSERT INTO rides (driver_id, from_where_x, from_where_y, to_where_x, to_where_y, `+"`when`"+`)
+VALUES (%s, %s, %s, %s, %s, %s)`,
+	driver_id, from_where_x, from_where_y, to_where_x, to_where_y, when)
     _, err = db.Exec(command)
 
     if err != nil{
