@@ -4,9 +4,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons"
 
+
 import HomeScreen from "./screen/HomeScreen";
 import MapScreen from "./screen/MapScreen";
 import ProfileScreen from "./screen/ProfileScreen";
+
 
 const homename = "Home"
 const Profilename = "Profile"
