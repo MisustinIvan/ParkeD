@@ -6,7 +6,7 @@ export default function MapScreen({navigation_bar}) {
         <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
             <Text
                 onPress={() => navigation_bar.navigate("Home")}
-                style={{ fontSize: 26, fontWeight:"bold"}}>Map Screen</Text>
+                style={{ fontSize: 26, fontWeight:"bold"}}>Map</Text>
          </View>   
     );
 }
