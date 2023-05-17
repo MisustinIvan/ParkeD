@@ -84,10 +84,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 0,
-        backgroundColor: "#3f3f3f"
+        backgroundColor: "#ff6700"
       },
       textStyle: {
-        color: 'white',
+        color: "#3f3f3f",
         fontWeight: 'bold',
         textAlign: 'center',
       },
