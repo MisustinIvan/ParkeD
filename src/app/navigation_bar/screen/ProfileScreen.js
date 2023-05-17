@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ff6700",
     marginTop: 7,
     },
+
     textBtnStyle:{
         textAlign:"center",
         color: "#3f3f3f",
@@ -121,7 +122,6 @@ const SignUp = (email, username, password, spz, isdisabled) => {
 }
 
 const Login = (email, password, navigation, userId, loggedIn, setUserId, setLoggedIn) => {
-
 
     const getUserIdUrl = 'http://f486-84-19-71-121.ngrok-free.app/get_user_id';
 

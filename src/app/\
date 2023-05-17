@@ -1,0 +1,53 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { View, Text, StyleSheet } from "react-native";
+
+import { userIdAtom, loggedInAtom } from "../../App";
+import { useAtom, atom } from "jotai";
+
+export default function MapScreen({navigation}) {
+      const [parkplaces, setParkplaces] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const ParkplatzUrl = 'http://f486-84-19-71-121.ngrok-free.app/get_spot_state';
+      const requests = [];
+
+      for (let i = 1; i <= 5; i++) {
+        const data = "id=" + i
+
+        const request = axios.post(ParkplatzUrl, data)
+          .then(response => response.data)
+          .catch(error => {
+            console.error(error);
+            return null;
+          });
+
+        requests.push(request);
+      }
+
+      const responses = await Promise.all(requests);
+      setParkplaces(responses);
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+        {parkplaces.map((item, index) =>
+        (
+            <View style={styles.ParkingSpot}>
+                <Text style={styles.ParkingSpot} key={index}>{item.id, item.ocupied}</Text>
+            </View>
+        ))}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+    ParkingSpot : {
+        fontSize: 30,
+        color: "#ff0000"
+    }
+})
