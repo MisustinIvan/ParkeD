@@ -36,7 +36,7 @@ export default function MainContainer(){
                         iconname = focused ? "map" : "map-outline"
                     } 
 
-                    return <Ionicons name={iconname} size={size} color={color}/>
+                    return <Ionicons name={iconname} size={size} color={"#ff6700"}/>
 
                 }
             })}>

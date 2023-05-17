@@ -6,7 +6,6 @@ import CheckBox from "expo-checkbox";
 
 
 
-
 const styles = StyleSheet.create({
     buttonStyle: {
     borderRadius: 8,
@@ -16,12 +15,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 0,
-    backgroundColor: "#3f3f3f",
+    backgroundColor: "#ff6700",
     marginTop: 7,
     },
     textBtnStyle:{
         textAlign:"center",
-        color: "white",
+        color: "#3f3f3f",
         fontSize: 25,
         
     },
@@ -49,11 +48,11 @@ const styles = StyleSheet.create({
         padding: 6,
         height: 50,
         width: '70%',
-        marginTop: 60,
+        marginTop: 20,
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 0,
-        backgroundColor: "#3f3f3f"
+        backgroundColor: "#ff6700"
         },
     modalView: {
         margin: 20,
@@ -106,6 +105,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
       }
 })
+
+
 
 
 const SignUp = (email, username, password, spz, isdisabled) => {
@@ -238,7 +239,7 @@ export default function ProfileScreen({navigation}) {
 
                         <Pressable
                         style={[styles.button, styles.buttonClose]}
-                        onPress={()=>{setModalVisible}}>
+                        onPress={()=>{setModalVisible(!modalVisible)}}>
                         <Text style={styles.textStyle}>Back</Text>
                         </Pressable>
                     </View>

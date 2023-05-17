@@ -28,6 +28,8 @@ func main() {
     http.HandleFunc("/join_shared_ride", JoinSharedRide)
     http.HandleFunc("/end_shared_ride", EndSharedRide)
     http.HandleFunc("/get_user_id", GetUserId)
+    http.HandleFunc("/get_spot_reserved", GetSpotReserved)
+
 
     fmt.Println("server ready")
     fmt.Println("----------------------")
