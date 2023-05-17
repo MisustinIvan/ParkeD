@@ -4,6 +4,9 @@ import React, {useState} from 'react';
 import { View, Text, Pressable ,StyleSheet ,TextInput, Modal, } from "react-native";
 import CheckBox from "expo-checkbox";
 
+import { atom, useAtom } from "jotai";
+import { loggedInAtom, userIdAtom } from "../../App"
+
 
 
 const styles = StyleSheet.create({
@@ -117,7 +120,8 @@ const SignUp = (email, username, password, spz, isdisabled) => {
     console.log(isdisabled)
 }
 
-const Login = (email, password, setUserId, setLoggedIn, navigation) => {
+const Login = (email, password, navigation, userId, loggedIn, setUserId, setLoggedIn) => {
+
 
     const getUserIdUrl = 'http://f486-84-19-71-121.ngrok-free.app/get_user_id';
 
@@ -125,7 +129,7 @@ const Login = (email, password, setUserId, setLoggedIn, navigation) => {
 
     axios.post(getUserIdUrl, data)
       .then(response => {
-        setUserId(response.data)
+        setUserId(prev_value => response.data )
       })
       .catch(error => {
         console.error(error);
@@ -137,7 +141,7 @@ const Login = (email, password, setUserId, setLoggedIn, navigation) => {
     axios.post(LoginUrl, data)
         .then(response => {
             console.log(response.data)
-            setLoggedIn(true)
+            setLoggedIn(prev_value => true)
         })
         .catch(error => {
           console.error(error);
@@ -146,14 +150,15 @@ const Login = (email, password, setUserId, setLoggedIn, navigation) => {
 };
 
 export default function ProfileScreen({navigation}) {
-    const [userId, setUserId] = React.useState("")
-    const [loggedIn, setLoggedIn] = React.useState(false)
     const [email, changeEmail] = React.useState("");
     const [name, changeName] = React.useState("");
     const [spz, changeSPZ] = React.useState("");
     const [password, changePassword] = React.useState("");
     const [isDisabled, changeDisabled] = React.useState(false)
     const [modalVisible, setModalVisible] = useState(false);
+
+    const [userId, setUserId] = useAtom(userIdAtom);
+    const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
 
     React.useEffect(() => {
     }, [email, name, spz, password, isDisabled] )
@@ -176,7 +181,7 @@ export default function ProfileScreen({navigation}) {
             />
             
         
-            <Pressable style={styles.buttonStyle} onPress={()=>{Login(email, password, setUserId, setLoggedIn, navigation)}}>
+            <Pressable style={styles.buttonStyle} onPress={()=>{Login(email, password, navigation, userId, loggedIn, setUserId, setLoggedIn)}}>
                 <Text style={styles.textBtnStyle}>Login</Text>
             </Pressable> 
             <Pressable style={styles.buttonStyle2} onPress={()=>{setModalVisible(true)}}>

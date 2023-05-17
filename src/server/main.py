@@ -2,16 +2,27 @@ import json
 import requests
 from pprint import pprint
 
-#change_spot_state_url : str = "http://localhost:6969/change_spot_state"
+change_spot_state_url : str = "http://localhost:6969/change_spot_state"
 
-#change_spot_state_data = {
-#        "id" : 1,
-#        "ocupied" : 1,
-#        "reserved" : 1,
+change_spot_state_data = {
+        "id" : 1,
+        "ocupied" : 0,
+        "reserved" : 0,
+        }
+
+resp = requests.get(change_spot_state_url, data=change_spot_state_data)
+print(resp.text)
+
+
+
+#url = "http://localhost:6969/get_spot_ocupied"
+#data = {
+#        "id" : 1
 #        }
 #
-#resp = requests.get(change_spot_state_url, data=change_spot_state_data)
-#print(resp.text)
+#resp = requests.get(url, data=data)
+#pprint(resp.text)
+
 
 #get_spot_info_url : str = "http://localhost:6969/get_spot_state"
 #
