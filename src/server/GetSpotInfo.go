@@ -38,6 +38,8 @@ func GetSpotInfo(w http.ResponseWriter, r * http.Request) {
     }
     body_str := string(body)
 
+    fmt.Println(body_str)
+
     values, err := url.ParseQuery(body_str)
 	if err != nil {
 		log.Fatal(err)

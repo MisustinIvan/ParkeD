@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons"
@@ -39,7 +40,6 @@ export default function MainContainer(){
 
                 }
             })}>
-
             <Tab.Screen name={Profilename} component={ProfileScreen}/>
             <Tab.Screen name={homename} component={HomeScreen}/>
             <Tab.Screen name={Mapname} component={MapScreen}/>

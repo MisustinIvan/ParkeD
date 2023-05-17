@@ -1,4 +1,5 @@
 import { setStatusBarBackgroundColor } from "expo-status-bar";
+import axios from 'axios';
 import React, {useState} from 'react';
 import { View, Text, Pressable ,StyleSheet ,TextInput, Modal, } from "react-native";
 import CheckBox from "expo-checkbox";
@@ -24,6 +25,12 @@ const styles = StyleSheet.create({
         fontSize: 25,
         
     },
+
+    infoText: {
+        fontSize: 15,
+        paddingBottom: 20,
+    },
+
     input: {
         height: 50,
         margin: 12,
@@ -100,29 +107,75 @@ const styles = StyleSheet.create({
       }
 })
 
-export default function ProfileScreen({navigation_bar}) {
-    const [text, onChangeText] = React.useState();
-    const [number, onChangeNumber] = React.useState(S);
+
+const SignUp = (email, username, password, spz, isdisabled) => {
+    console.log(email)
+    console.log(username)
+    console.log(password)
+    console.log(spz)
+    console.log(isdisabled)
+}
+
+const Login = (email, password, setUserId, setLoggedIn, navigation) => {
+
+    const getUserIdUrl = 'http://f486-84-19-71-121.ngrok-free.app/get_user_id';
+
+    data = "email=" + email
+
+    axios.post(getUserIdUrl, data)
+      .then(response => {
+        setUserId(response.data)
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+    const LoginUrl = 'http://f486-84-19-71-121.ngrok-free.app/login_user';
+    data = "email=" + email + "&" + "password=" + password
+
+    axios.post(LoginUrl, data)
+        .then(response => {
+            console.log(response.data)
+            setLoggedIn(true)
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    navigation.navigate("Home")
+};
+
+export default function ProfileScreen({navigation}) {
+    const [userId, setUserId] = React.useState("")
+    const [loggedIn, setLoggedIn] = React.useState(false)
+    const [email, changeEmail] = React.useState("");
+    const [name, changeName] = React.useState("");
+    const [spz, changeSPZ] = React.useState("");
+    const [password, changePassword] = React.useState("");
+    const [isDisabled, changeDisabled] = React.useState(false)
     const [modalVisible, setModalVisible] = useState(false);
-    const [isSelected, setSelection] = useState(false);
+
+    React.useEffect(() => {
+    }, [email, name, spz, password, isDisabled] )
+
     return(
         <View>
             <View style={styles.container}>
                 <TextInput
                 style={styles.input}
-                value={text}
-                placeholder="Username"
-                
+                value={email}
+                onChangeText={newText => changeEmail(newText)}
+                placeholder="email"
             />
+
             <TextInput
                 style={styles.input}
-                value={text}
+                value={password}
+                onChangeText={newText => changePassword(newText)}
                 placeholder="Password"
-                
             />
             
-            
-            <Pressable style={styles.buttonStyle} onPress={()=>{console.log("ligma")}}>
+        
+            <Pressable style={styles.buttonStyle} onPress={()=>{Login(email, password, setUserId, setLoggedIn, navigation)}}>
                 <Text style={styles.textBtnStyle}>Login</Text>
             </Pressable> 
             <Pressable style={styles.buttonStyle2} onPress={()=>{setModalVisible(true)}}>
@@ -142,39 +195,51 @@ export default function ProfileScreen({navigation_bar}) {
                         <View style={styles.container}>
                             <TextInput
                             style={styles.inputModal}
-                            value={text}
-                            placeholder="Username"
+                            value={name}
+                            onChangeText={newText => changeName(newText)}
+                            placeholder="Name"
                             
                         />
                         <TextInput
                             style={styles.inputModal}
-                            value={text}
+                            value={password}
+                            onChangeText={newText => changePassword(newText)}
                             placeholder="Password"
                             
                         />
                         <TextInput
                             style={styles.inputModal}
-                            value={text}
+                            value={email}
+                            onChangeText={newText => changeEmail(newText)}
                             placeholder="Email"
                             
                         />
                         <TextInput
                             style={styles.inputModal}
-                            value={text}
+                            value={spz}
+                            onChangeText={newText => changeSPZ(newText)}
                             placeholder="SPZ"
                             
                         />
+                        <Text style={styles.infoText}>Are you disabled?</Text>
                         <CheckBox
-                          value={isSelected}
-                          onValueChange={setSelection}
-                          style={styles.checkbox}/>
+                            value={isDisabled}
+                            onValueChange={changeDisabled}
+                            style={styles.checkbox}/>
                         </View>
                     
                         
                         <Pressable
                         style={[styles.button, styles.buttonClose]}
-                        onPress={() => setModalVisible(!modalVisible)}>
+                        onPress={()=>{SignUp(email, name, password, spz, isDisabled)}}>
                         <Text style={styles.textStyle}>Sign Up</Text>
+                        </Pressable>
+
+
+                        <Pressable
+                        style={[styles.button, styles.buttonClose]}
+                        onPress={()=>{setModalVisible}}>
+                        <Text style={styles.textStyle}>Back</Text>
                         </Pressable>
                     </View>
                 </View>

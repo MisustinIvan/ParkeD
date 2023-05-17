@@ -93,11 +93,21 @@ from pprint import pprint
 #pprint(resp.text)
 
 
-url = "http://localhost:6969/end_shared_ride"
+#url = "http://localhost:6969/end_shared_ride"
+#
+#data = {
+#        "ride_id" : 1,
+#        }
+#
+#resp = requests.get(url, data=data)
+#pprint(resp.text)
 
-data = {
-        "ride_id" : 1,
-        }
-
-resp = requests.get(url, data=data)
-pprint(resp.text)
+#url = "http://f486-84-19-71-121.ngrok-free.app/get_user_id"
+#
+#data = {
+#        "email" : "ligma@balls.gay"
+#        }
+#
+#
+#resp = requests.get(url, data=data)
+#pprint(resp.text)

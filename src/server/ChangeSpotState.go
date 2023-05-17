@@ -33,6 +33,8 @@ func ChangeSpotState(w http.ResponseWriter, r * http.Request) {
     id := values.Get("id")
     ocupied := values.Get("ocupied")
     reserved := values.Get("reserved")
+    
+    fmt.Println(values)
 
 
     command := fmt.Sprintf(
