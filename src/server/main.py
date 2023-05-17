@@ -2,16 +2,16 @@ import json
 import requests
 from pprint import pprint
 
-#change_spot_state_url : str = "http://localhost:6969/change_spot_state"
-#
-#change_spot_state_data = {
-#        "id" : 1,
-#        "ocupied" : 0,
-#        "reserved" : 0,
-#        }
-#
-#resp = requests.get(change_spot_state_url, data=change_spot_state_data)
-#print(resp.text)
+change_spot_state_url : str = "http://localhost:6969/change_spot_state"
+
+change_spot_state_data = {
+        "id" : 3,
+        "ocupied" : 0,
+        "reserved" : 1,
+        }
+
+resp = requests.get(change_spot_state_url, data=change_spot_state_data)
+print(resp.text)
 
 
 
@@ -34,22 +34,22 @@ from pprint import pprint
 #pprint(resp.text)
 #pprint(json.loads(resp.text))
 
-url = "http://localhost:6969/create_spot"
-
-data = {
-        "ocupied": 0,
-        "reserved": 0,
-        "time_from": 69,
-        "time_to": 420,
-        "for_disabled": 0,
-        "engine_type": "electric",
-        "location_x": 1234,
-        "location_y": 5678,
-        "price": 420,
-        }
-
-resp = requests.get(url, data=data)
-pprint(resp.text)
+#url = "http://localhost:6969/create_spot"
+#
+#data = {
+#        "ocupied": 0,
+#        "reserved": 0,
+#        "time_from": 69,
+#        "time_to": 420,
+#        "for_disabled": 0,
+#        "engine_type": "electric",
+#        "location_x": 1234,
+#        "location_y": 5678,
+#        "price": 420,
+#        }
+#
+#resp = requests.get(url, data=data)
+#pprint(resp.text)
 
 
 #url = "http://localhost:6969/register_user"

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text, Pressable ,StyleSheet ,TextInput} from "react-native";
+import { View, Text, Pressable ,StyleSheet ,TextInput, Linking} from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons"
 import BetterImage from 'react-native-better-image';
 
@@ -39,17 +39,24 @@ const style = {
     resizeMode: 'contain',
     marginTop: 50,
   };
+
+const NavigateToPlace = () => {
+    const url = 'https://goo.gl/maps/RVSNJdB3dJmfjbP28'; // Replace with your desired URL
+    Linking.openURL(url)
+      .catch(err => console.error('Failed to open URL:', err));
+};
+
 export default function HomeScreen({navigation_bar}) {
     return(
-        <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
+        <View style={{flex: 1, alignItems: "center", justifyContent: "center", marginTop : 180}}>
             <View style={styles.container}>
                 <BetterImage  source={{uri:"https://i.ibb.co/6ZCjKL6/logo-removebg-preview.png"}} viewStyle={style}/>
             </View>
             
-            <Pressable style={styles.buttonStyle} onPress={()=>{console.log("navigate")}}>
+            <Pressable style={styles.buttonStyle} onPress={NavigateToPlace}>
                 <Ionicons name={"navigate-circle"} size={300} color={"#3f3f3f"}/>
             </Pressable> 
-            <Text style={styles.text1}>FIND BEST PARKING NOW!</Text>
+            <Text style={styles.text1}></Text>
         
          </View>   
     );

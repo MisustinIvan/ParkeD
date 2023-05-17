@@ -1,15 +1,30 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { View, Text, StyleSheet, ScrollView, Modal, Pressable, TextInput } from "react-native";
+import { userIdAtom } from "../../App";
+import { atom, useAtom } from "jotai"
 
-import { userIdAtom, loggedInAtom } from "../../App";
-import { useAtom, atom } from "jotai";
+const ReserveSpot = (id) => {
+  const changeStateUrl = 'http://f486-84-19-71-121.ngrok-free.app/reserve_spot';
+  
+  const data = "id=" + id
+  
+  axios.post(changeStateUrl, data)
+    .then(response => {
+      console.log(response.data)
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
 
 export default function MapScreen({navigation}) {
+  const [userId, setUserId] = useAtom(userIdAtom)
   const [parkplaces, setParkplaces] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [timeFrom, setTimeFrom] = useState(0)
-  const [timeTo, setTimeTo] = useState(0)
+  const [timeFrom, setTimeFrom] = useState(null)
+  const [timeTo, setTimeTo] = useState(null)
+  const [spotId, setSpotId] = useState(0)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,16 +58,16 @@ export default function MapScreen({navigation}) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
         <ScrollView style={{ marginTop: 20 }}>
-        {parkplaces.map((item, index) =>
+        {parkplaces.map((item) =>
         (
             <View style={styles.ParkingSpot}>
-              <Pressable onPress={()=>{setModalVisible(true)}}>
-                <Text style={styles.ParkingSpot} key={index}>
+              <Pressable onPress={()=>{setSpotId(item.id); setModalVisible(true)}}>
+                <Text style={styles.ParkingSpot} key={item.id}>
                   {item.id}
                   {" | "}
-                  {item.ocupied = 1 ? "empty" : "occupied"}
+                  {item.ocupied == 1 ? "full" : "empty"}
                   {" | "}
-                  {item.reserved = 1 ? "free" : "reserved"}
+                  {item.reserved == 1 ? "reserved" : "free"}
                   {" | "}
                   {item.engine_type}
                   {item.for_disabled = 0 ? " | " : ""}
@@ -75,6 +90,7 @@ export default function MapScreen({navigation}) {
             <View style={styles.ReservationMenu}>
               <Text style={styles.InfoText}>Pick a time</Text>
 
+
               <TextInput
                 value={timeFrom}
                 style={styles.time_input}
@@ -88,7 +104,7 @@ export default function MapScreen({navigation}) {
                 onChangeText={newText => setTimeTo(newText)}
                 placeholder="To"
               />
-            <Pressable style={styles.ButtonContainer} onPress={()=>{}}>
+            <Pressable style={styles.ButtonContainer} onPress={()=>{ReserveSpot(spotId); setModalVisible(false)}}>
               <Text style={styles.Button}>Confirm</Text>
             </Pressable>
 
@@ -154,3 +170,11 @@ const styles = StyleSheet.create({
   }
 
 })
+
+
+//<TextInput
+//value={timeFrom}
+//style={styles.time_input}
+//onChangeText={newText => setTimeFrom(newText)}
+//placeholder="From"
+///>
